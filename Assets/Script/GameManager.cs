@@ -12,20 +12,20 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI infoTMP;
     int nowPlayer;
 
-    int[,] board = new int[3, 3];//3*3のint型２次元配列を定義
-    bool win;
+    /*int[,] board = new int[4, 4];*///4*4のint型２次元配列を定義
+    bool win; // 要削除
     bool draw;
     // Start is called before the first frame update
     void Start()
     {
         //2次元配列boardの全ての値を初期化（-1に）
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                board[i, j] = -1;
-            }
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    for (int j = 0; j < 4; j++)
+        //    {
+        //        board[i, j] = -1;
+        //    }
+        //}
     }
 
     // Update is called once per frame
@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour
     {
         if (win || draw) return;
 
-        infoTMP.text = (nowPlayer + 1) + "P's Turn";
-        bool next = false;
+        // infoTMP.text = (nowPlayer + 1) + "P's Turn";
+        // bool next = false;
         if (Input.GetMouseButtonUp(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -42,18 +42,18 @@ public class GameManager : MonoBehaviour
             if (null != hit.collider)
             {
                 Vector3 pos = hit.collider.gameObject.transform.position;
-                int x = (int)pos.x + 1;
-                int y = (int)pos.y + 1;
-                if (-1 == board[y, x])
+                int x = (int)pos.x;
+                int y = (int)pos.y;
+                if (-1 == CSVReader.board[y, x])
                 {
                     GameObject prefab = prefabCircle;
-                    if (1 == nowPlayer) prefab = prefabDiamond;
+                    // if (1 == nowPlayer) prefab = prefabDiamond;
                     Instantiate(prefab, pos, Quaternion.identity);//ここまでは1次元配列ver.と同じ記載
-                    board[y, x] = nowPlayer; //2次元配列なので[x,y]にプレイヤー番号を入れる
-                    next = true;
+                    CSVReader.board[y, x] = nowPlayer; //2次元配列なので[x,y]にプレイヤー番号を入れる
+                    // next = true;
                 }
             }
-        }
+        }/*
         if (next)//勝敗チェック開始
         {
             win = false;
@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-        }
+        }*/
     }
 
     public void OnClickRetry()
@@ -200,11 +200,11 @@ public class GameManager : MonoBehaviour
     }
     public void OnClickDebug()//デバッグ用（各配列の値を出力する）
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
-                Debug.Log("(i,j) = (" + i + "," + j + ") = " + board[i, j]);
+                Debug.Log("(i,j) = (" + i + "," + j + ") = " + CSVReader.board[i, j]);
             }
         }
     }
