@@ -10,7 +10,7 @@ public class CSVReader : MonoBehaviour
 
     public List<string[]> _csvData = new List<string[]>();  //CSVファイルの中身を入れるリスト
 
-    public static int[,] board = new int[4, 4];
+    public int[,] temp = new int[4, 4];
     void Start()
     {
         _csvFile = Resources.Load("FirstStgData") as TextAsset;   //Resourceにある指定のパスのCSVファイルを格納
@@ -26,8 +26,8 @@ public class CSVReader : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                board[i, j] = (int)Convert.ToSingle(_csvData[i][j]);
-                Debug.Log(board[i, j]);
+                temp[i, j] = (int)Convert.ToSingle(_csvData[i][j]);
+                Debug.Log(temp[i, j]);
             }
         }
     }
