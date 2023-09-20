@@ -6,14 +6,13 @@ using System;
 
 public class CSVReader : MonoBehaviour
 {
+    [SerializeField] private string _csvFilename;
     private TextAsset _csvFile;   //CSVファイル
-
-    public List<string[]> _csvData = new List<string[]>();  //CSVファイルの中身を入れるリスト
-
+    private List<string[]> _csvData = new List<string[]>();  //CSVファイルの中身を入れるリスト
     public int[,] temp = new int[4, 4];
-    void Start()
+    private void Awake()
     {
-        _csvFile = Resources.Load("FirstStgData") as TextAsset;   //Resourceにある指定のパスのCSVファイルを格納
+        _csvFile = Resources.Load(_csvFilename) as TextAsset;   //Resourceにある指定のパスのCSVファイルを格納
         StringReader reader = new StringReader(_csvFile.text);      //TextAssetをStringReaderに変換
 
         while (reader.Peek() != -1)
@@ -27,7 +26,7 @@ public class CSVReader : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 temp[i, j] = (int)Convert.ToSingle(_csvData[i][j]);
-                Debug.Log(temp[i, j]);
+                //Debug.Log(temp[i, j]);
             }
         }
     }

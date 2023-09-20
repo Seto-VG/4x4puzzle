@@ -11,9 +11,9 @@ public class GameManager : MonoBehaviour
     public GameObject resultObj;
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
-    int nowPlayer;
-
-    int[,] board = new int[4, 4];
+    
+    private int[,] board = new int[4, 4];
+    int ActiveFloor = 0;
     bool win;
     bool lose;
     // Start is called before the first frame update
@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log(board[i, j]);
             }
         }
+        Vector3 ActiveFloorPos = player.transform.position;
+        int FloorX = (int)ActiveFloorPos.x;
+        int FloorY = (int)ActiveFloorPos.y;
+        board[FloorY, FloorX] = ActiveFloor;
     }
 
     // Update is called once per frame
@@ -41,9 +45,6 @@ public class GameManager : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
             if (null != hit.collider)
             {
-                Vector3 playerPos = player.transform.position;
-                int playerX = (int)playerPos.x;
-                int playerY = (int)playerPos.y;
                 Vector3 pos = hit.collider.gameObject.transform.position;
                 int x = (int)pos.x;
                 int y = (int)pos.y;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
                 if (-1 == board[y, x])
                 {
                     player.transform.position = pos;
-                    board[y, x] = nowPlayer; 
+                    board[y, x] = ActiveFloor; 
                 }
             }
         }
