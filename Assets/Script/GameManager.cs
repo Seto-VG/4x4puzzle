@@ -7,38 +7,41 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private string thisScene;
+    [SerializeField] private string nextScene;
     public GameObject player;
     public GameObject resultObj;
+    public GameObject nextStageButton;
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
     
     private int[,] board = new int[4, 4];
-    int ActiveFloor = 0;
+    Vector3 nowPlayerPos;
     bool win;
     bool lose;
-    // Start is called before the first frame update
     void Start()
     {
+        // データを配列に
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
                 board[i, j] = csvReader.temp[i,j];
-                Debug.Log(board[i, j]);
+                //Debug.Log(board[i, j]);
             }
         }
-        Vector3 ActiveFloorPos = player.transform.position;
-        int FloorX = (int)ActiveFloorPos.x;
-        int FloorY = (int)ActiveFloorPos.y;
-        board[FloorY, FloorX] = ActiveFloor;
+        // プレイヤーの初期位置設定
+        nowPlayerPos = player.transform.position;
+        int FloorX = (int)nowPlayerPos.x;
+        int FloorY = (int)nowPlayerPos.y;
+        board[FloorY, FloorX] = 0;
+        // 次のステージへのボタンの初期設定
+        nextStageButton.SetActive(false);
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (win || lose) return;
 
-        // infoTMP.text = "";
         if (Input.GetMouseButtonUp(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -48,18 +51,55 @@ public class GameManager : MonoBehaviour
                 Vector3 pos = hit.collider.gameObject.transform.position;
                 int x = (int)pos.x;
                 int y = (int)pos.y;
-                Debug.Log("当たった");
-                if (-1 == board[y, x])
+                Debug.Log("hitCollider");
+                // 隣接しているか
+                if (player.transform.position.x + 1 == pos.x && player.transform.position.y == pos.y
+                 || player.transform.position.x - 1 == pos.x && player.transform.position.y == pos.y
+                 || player.transform.position.x == pos.x && player.transform.position.y + 1 == pos.y
+                 || player.transform.position.x == pos.x && player.transform.position.y - 1 == pos.y)
                 {
-                    player.transform.position = pos;
-                    board[y, x] = ActiveFloor; 
+                    if (-1 == board[y, x]) // 通れる場所の時
+                    {
+                        player.transform.position = pos;
+                        board[y, x] = 0;
+                    }
+                    else if (0 == board[y, x]) // 通った場所の時
+                    {
+                        infoTMP.text = "そこはもういけない";
+                    }
+                    else if (1 == board[y, x]) // ゲームオーバーの時
+                    {
+                        player.transform.position = pos;
+                        GameOver();
+                    }
+                    else if (2 == board[y, x]) // クリアの時
+                    {
+                        player.transform.position = pos;
+                        board[y, x] = 0;
+                        CompleteStage();
+                    }
                 }
             }
         }
     }
+    public void CompleteStage()
+    {
+        win = true;
+        infoTMP.text = "逃げ切った！";
+        nextStageButton.SetActive(true);
+    }
+    public void GameOver()
+    {
+        lose = true;
+        infoTMP.text = "みつかった！";
+    }
     public void OnClickRetry()
     {
-        SceneManager.LoadScene("InGameScene");
+        SceneManager.LoadScene(thisScene);
+    }
+    public void OnClickNextStage()
+    {
+        SceneManager.LoadScene(nextScene);
     }
     public void OnClickDebug()//デバッグ用（各配列の値を出力する）
     {
