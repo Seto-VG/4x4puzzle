@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,9 +15,9 @@ public class GameManager : MonoBehaviour
     public GameObject nextStageButton;
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
-    
     private int[,] board = new int[4, 4];
     Vector3 nowPlayerPos;
+    [System.NonSerialized] public bool isStart = false;
     bool win;
     bool lose;
     void Start()
@@ -40,8 +41,14 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if (win || lose) return;
-
+        if (isStart)
+        {
+            if (win || lose) return;
+            IsGetMouseButtonUp();
+        }
+    }
+    public void IsGetMouseButtonUp()
+    {
         if (Input.GetMouseButtonUp(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
