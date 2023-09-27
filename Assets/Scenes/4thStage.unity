@@ -1372,8 +1372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f770b731e4887274fb77a47c83a0ff26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisScene: 1stStage
-  nextScene: 2ndStage
+  thisScene: 4thStage
+  nextScene: 5thStage
   player: {fileID: 1425149940}
   resultObj: {fileID: 1999854844}
   nextStageButton: {fileID: 1516819202}
