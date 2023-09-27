@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using Unity.VisualScripting;
+using static UnityEditor.PlayerSettings;
+using Unity.Burst.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,37 +14,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string nextScene;
     [System.NonSerialized] public bool isStart;
 
+    public ObstaclesScript obstacles;
     public GameObject player;
     public GameObject resultObj;
     public GameObject nextStageButton;
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
 
+    public int playerPosX;
+    public int playerPosY;
     private int[,] board = new int[4, 4];
-    Vector3 nowPlayerPos;
+    Vector3 initialPlayerPos = new Vector3(3.0f, 0.0f, 0.0f);
     bool win;
     bool lose;
     int failureCount;
     void Start()
     {
-        // データを配列に
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                board[i, j] = csvReader.temp[i,j];
-                //Debug.Log(board[i, j]);
-            }
-        }
-        // プレイヤーの初期設定
-        nowPlayerPos = player.transform.position;
-        int FloorX = (int)nowPlayerPos.x;
-        int FloorY = (int)nowPlayerPos.y;
-        board[FloorY, FloorX] = 0;
-        player.SetActive(false);
-        // ボタンの初期設定
-        nextStageButton.SetActive(false);
-        resultObj.SetActive(false);
+        Initialize();
     }
     void Update()
     {
@@ -63,7 +51,7 @@ public class GameManager : MonoBehaviour
                 Vector3 pos = hit.collider.gameObject.transform.position;
                 int x = (int)pos.x;
                 int y = (int)pos.y;
-                //Debug.Log("hitCollider");
+                Debug.Log("hitCollider");
                 // 隣接しているか
                 if (player.transform.position.x + 1 == pos.x && player.transform.position.y == pos.y
                  || player.transform.position.x - 1 == pos.x && player.transform.position.y == pos.y
@@ -94,6 +82,31 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void Initialize()
+    {
+        isStart = false;
+        win = false;
+        lose = false;
+        obstacles.Initialize();
+        infoTMP.text = "";
+        // データを配列に
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                board[i, j] = csvReader.temp[i, j];
+                Debug.Log(board[i, j]);
+            }
+        }
+
+        // プレイヤーの初期設定
+        player.transform.position = initialPlayerPos;
+        board[playerPosY, playerPosX] = 0;
+        player.SetActive(false);
+        // ボタンの初期設定
+        nextStageButton.SetActive(false);
+        resultObj.SetActive(false);
+    }
     public void CompleteStage()
     {
         win = true;
@@ -109,7 +122,7 @@ public class GameManager : MonoBehaviour
         if (failureCount == 3)
         {
             failureCount = 0;
-            CoroutineScript.instance.StartCoroutine("Wait3Seconds");
+            //CoroutineScript.instance.StartCoroutine("Wait3Seconds");
             SceneManager.LoadScene("GameOverScene");
         }
     }
@@ -119,7 +132,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnClickRetry()
     {
-        SceneManager.LoadScene(thisScene);
+        Initialize();
     }
     public void OnClickNextStage()
     {

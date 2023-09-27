@@ -1379,6 +1379,8 @@ MonoBehaviour:
   nextStageButton: {fileID: 1516819202}
   infoTMP: {fileID: 818663343}
   csvReader: {fileID: 1674776329}
+  playerPosX: 0
+  playerPosY: 0
 --- !u!1 &1425149940 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5313119114500196157, guid: 00b3f63971d728b4a97b67de859a4f99, type: 3}
@@ -1754,7 +1756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcfe506a08223d4289d7747fe8140f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _csvFilename: deat1
+  _csvFilename: deta2
 --- !u!4 &1674776330
 Transform:
   m_ObjectHideFlags: 0

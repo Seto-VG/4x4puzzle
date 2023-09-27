@@ -8,13 +8,17 @@ public class ObstaclesScript : MonoBehaviour
     public GameManager gameManager;
     void Start()
     {
+        Initialize();
+    }
+    public void Initialize()
+    {
         obstacles.SetActive(true);
         StartCoroutine("WaitForFiveSecond");
     }
     IEnumerator WaitForFiveSecond()
     {
         yield return new WaitForSeconds(5.0f);
-        //Debug.Log("fadeObject");
+        Debug.Log("fadeObject");
         gameManager.isStart = true;
         gameManager.ActivePlayer();
         obstacles.SetActive(false);
