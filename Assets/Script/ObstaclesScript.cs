@@ -9,13 +9,14 @@ public class ObstaclesScript : MonoBehaviour
     void Start()
     {
         obstacles.SetActive(true);
-        StartCoroutine("WaitForThreeSecond");
+        StartCoroutine("WaitForFiveSecond");
     }
-    IEnumerator WaitForThreeSecond()
+    IEnumerator WaitForFiveSecond()
     {
-        yield return new WaitForSeconds(3.0f);
-        Debug.Log("fadeObject");
+        yield return new WaitForSeconds(5.0f);
+        //Debug.Log("fadeObject");
         gameManager.isStart = true;
+        gameManager.ActivePlayer();
         obstacles.SetActive(false);
     }
 }

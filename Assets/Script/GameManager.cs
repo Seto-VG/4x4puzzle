@@ -10,16 +10,19 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private string thisScene;
     [SerializeField] private string nextScene;
+    [System.NonSerialized] public bool isStart;
+
     public GameObject player;
     public GameObject resultObj;
     public GameObject nextStageButton;
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
+
     private int[,] board = new int[4, 4];
     Vector3 nowPlayerPos;
-    [System.NonSerialized] public bool isStart = false;
     bool win;
     bool lose;
+    int failureCount;
     void Start()
     {
         // データを配列に
@@ -31,13 +34,15 @@ public class GameManager : MonoBehaviour
                 //Debug.Log(board[i, j]);
             }
         }
-        // プレイヤーの初期位置設定
+        // プレイヤーの初期設定
         nowPlayerPos = player.transform.position;
         int FloorX = (int)nowPlayerPos.x;
         int FloorY = (int)nowPlayerPos.y;
         board[FloorY, FloorX] = 0;
-        // 次のステージへのボタンの初期設定
+        player.SetActive(false);
+        // ボタンの初期設定
         nextStageButton.SetActive(false);
+        resultObj.SetActive(false);
     }
     void Update()
     {
@@ -58,7 +63,7 @@ public class GameManager : MonoBehaviour
                 Vector3 pos = hit.collider.gameObject.transform.position;
                 int x = (int)pos.x;
                 int y = (int)pos.y;
-                Debug.Log("hitCollider");
+                //Debug.Log("hitCollider");
                 // 隣接しているか
                 if (player.transform.position.x + 1 == pos.x && player.transform.position.y == pos.y
                  || player.transform.position.x - 1 == pos.x && player.transform.position.y == pos.y
@@ -98,7 +103,19 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         lose = true;
+        failureCount++;
         infoTMP.text = "みつかった！";
+        resultObj.SetActive(true);
+        if (failureCount == 3)
+        {
+            failureCount = 0;
+            CoroutineScript.instance.StartCoroutine("Wait3Seconds");
+            SceneManager.LoadScene("GameOverScene");
+        }
+    }
+    public void OnClickReturnTitle()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
     public void OnClickRetry()
     {
@@ -106,7 +123,14 @@ public class GameManager : MonoBehaviour
     }
     public void OnClickNextStage()
     {
+        failureCount = 0;
         SceneManager.LoadScene(nextScene);
+        if (nextScene == "ClearScene") return;
+        Destroy(this.gameObject);
+    }
+    public void ActivePlayer()
+    {
+        player.SetActive(true);
     }
     public void OnClickDebug()//デバッグ用（各配列の値を出力する）
     {

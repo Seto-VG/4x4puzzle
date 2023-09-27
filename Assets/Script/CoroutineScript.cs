@@ -29,5 +29,11 @@ public class CoroutineScript : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         Debug.Log("Wait3Seconds");
     }
+    IEnumerator WaitForFiveSecond()
+    {
+        yield return new WaitForSeconds(5.0f);
+        Debug.Log("Wait5Seconds");
+    }
+
 }
 
