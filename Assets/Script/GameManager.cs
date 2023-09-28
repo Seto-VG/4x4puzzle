@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using System;
-using Unity.VisualScripting;
-using static UnityEditor.PlayerSettings;
-using Unity.Burst.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
