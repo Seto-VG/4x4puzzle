@@ -61,12 +61,12 @@ public class GameManager : MonoBehaviour
                     if (-1 == board[y, x]) // 通れる場所の時
                     {
                         player.transform.position = pos;
-                        board[y, x] = 0;
+                        //board[y, x] = 0;
                     }
-                    else if (0 == board[y, x]) // 通った場所の時
-                    {
-                        infoTMP.text = "そこはもういけない";
-                    }
+                    //else if (0 == board[y, x]) // 通った場所の時
+                    //{
+                    //    infoTMP.text = "そこはもういけない";
+                    //}
                     else if (1 == board[y, x]) // ゲームオーバーの時
                     {
                         player.transform.position = pos;
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
                     else if (2 == board[y, x]) // クリアの時
                     {
                         player.transform.position = pos;
-                        board[y, x] = 0;
+                        //board[y, x] = 0;
                         CompleteStage();
                     }
                 }
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
         // プレイヤーの初期設定
         player.transform.position = initialPlayerPos;
-        board[playerPosY, playerPosX] = 0;
+        //board[playerPosY, playerPosX] = 0;
         player.SetActive(false);
         // ボタンの初期設定
         nextStageButton.SetActive(false);
