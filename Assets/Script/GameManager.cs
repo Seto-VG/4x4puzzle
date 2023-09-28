@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI infoTMP;
     public CSVReader csvReader;
 
-    public int playerPosX;
-    public int playerPosY;
+    public float playerPosX;
+    public float playerPosY;
     private int[,] board = new int[4, 4];
-    Vector3 initialPlayerPos = new Vector3(3.0f, 0.0f, 0.0f);
+    Vector3 initialPlayerPos;
     bool win;
     bool lose;
     int failureCount;
@@ -98,8 +98,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log(board[i, j]);
             }
         }
-
         // ƒvƒŒƒCƒ„[‚Ì‰Šúİ’è
+        initialPlayerPos = new Vector3(playerPosX, playerPosY, 0.0f);
         player.transform.position = initialPlayerPos;
         //board[playerPosY, playerPosX] = 0;
         player.SetActive(false);
