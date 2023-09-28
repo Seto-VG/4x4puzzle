@@ -1077,7 +1077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854889102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1.5, z: -211}
+  m_LocalPosition: {x: 0.25, y: 1.5, z: -211}
   m_LocalScale: {x: 0.012753237, y: 0.024347583, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1213,7 +1213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004665987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.01, y: 2.99, z: 0}
+  m_LocalPosition: {x: 1, y: 3, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1383,7 +1383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200118165}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7, y: 0.2, z: -211}
+  m_LocalPosition: {x: -0.75, y: 0.2, z: -211}
   m_LocalScale: {x: 0.026634267, y: 0.04060402, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2012,7 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcfe506a08223d4289d7747fe8140f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _csvFilename: deat1
+  _csvFilename: data6
 --- !u!4 &1674776330
 Transform:
   m_ObjectHideFlags: 0
