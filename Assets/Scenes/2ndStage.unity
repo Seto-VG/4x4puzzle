@@ -1374,11 +1374,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisScene: 2ndStage
   nextScene: 3rdStage
+  obstacles: {fileID: 0}
   player: {fileID: 1425149940}
   resultObj: {fileID: 1999854844}
   nextStageButton: {fileID: 1516819202}
   infoTMP: {fileID: 818663343}
   csvReader: {fileID: 1674776329}
+  playerPosX: 0
+  playerPosY: 0
 --- !u!1 &1425149940 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5313119114500196157, guid: 00b3f63971d728b4a97b67de859a4f99, type: 3}
@@ -2587,15 +2590,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4652423554204062543, guid: 05ae1fb3200723847a92b1409c107a55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7470535
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4652423554204062543, guid: 05ae1fb3200723847a92b1409c107a55, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.48242772
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4652423554204062543, guid: 05ae1fb3200723847a92b1409c107a55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -210.93535
+      value: -211
       objectReference: {fileID: 0}
     - target: {fileID: 4652423554204062543, guid: 05ae1fb3200723847a92b1409c107a55, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2648,15 +2651,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8159538409666898105, guid: 53ecf82836063bf4baad58c2b8d48e2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.2529465
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8159538409666898105, guid: 53ecf82836063bf4baad58c2b8d48e2c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5175723
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8159538409666898105, guid: 53ecf82836063bf4baad58c2b8d48e2c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -210.93535
+      value: -211
       objectReference: {fileID: 0}
     - target: {fileID: 8159538409666898105, guid: 53ecf82836063bf4baad58c2b8d48e2c, type: 3}
       propertyPath: m_LocalRotation.w

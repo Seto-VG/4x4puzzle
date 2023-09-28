@@ -645,9 +645,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345533853}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7620535, y: 0.102027774, z: -210.93535}
-  m_LocalScale: {x: 0.023974128, y: 0.041614514, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -1.75, y: 0.1, z: -211}
+  m_LocalScale: {x: 0.026515385, y: 0.041614514, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1620123124}
   m_RootOrder: -1
@@ -1458,11 +1458,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisScene: 3rdStage
   nextScene: 4thStage
+  obstacles: {fileID: 0}
   player: {fileID: 1425149940}
   resultObj: {fileID: 1999854844}
   nextStageButton: {fileID: 1516819202}
   infoTMP: {fileID: 818663343}
   csvReader: {fileID: 1674776329}
+  playerPosX: 0
+  playerPosY: 0
 --- !u!1 &1425149940 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5313119114500196157, guid: 00b3f63971d728b4a97b67de859a4f99, type: 3}
@@ -1719,7 +1722,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552854622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25824654, y: 0.46892774, z: -210.93535}
+  m_LocalPosition: {x: 0.3, y: 0.5, z: -211}
   m_LocalScale: {x: 0.013195704, y: 0.028177926, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
