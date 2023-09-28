@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string nextScene;
     [System.NonSerialized] public bool isStart;
 
+
     public ObstaclesScript obstacles;
     public GameObject player;
     public GameObject resultObj;
