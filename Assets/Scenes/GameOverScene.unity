@@ -224,6 +224,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6707161819758425142, guid: b0b965bb27b8f5043a9ff24287ece830, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6707161819758425142, guid: b0b965bb27b8f5043a9ff24287ece830, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 4d499da9a02071343ae860abc7526bd3, type: 3}
@@ -872,6 +876,7 @@ GameObject:
   - component: {fileID: 880923422}
   - component: {fileID: 880923421}
   - component: {fileID: 880923420}
+  - component: {fileID: 880923423}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -982,6 +987,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880923418}
   m_CullTransparentMesh: 1
+--- !u!114 &880923423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880923418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aff23b176c60924b86c3d0940dc8c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadScene: 1stStage
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
+  fadeSpeedMultiplier: 1
 --- !u!1 &1003297001
 GameObject:
   m_ObjectHideFlags: 0
