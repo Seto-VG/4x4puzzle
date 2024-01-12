@@ -1512,7 +1512,7 @@ MonoBehaviour:
   resultObj: {fileID: 1999854844}
   nextStageButton: {fileID: 1516819202}
   infoTMP: {fileID: 818663343}
-  csvReader: {fileID: 1674776329}
+  LoadData: {fileID: 1674776329}
   playerPosX: 3
   playerPosY: 0
 --- !u!1001 &1381515957

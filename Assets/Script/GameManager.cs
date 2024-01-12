@@ -10,21 +10,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string nextScene;
     [System.NonSerialized] public bool isStart;
 
-
-    public ObstaclesScript obstacles;
+    public ObstaclesScript obstacles; // 障害物
     public GameObject player;
     public GameObject resultObj;
     public GameObject nextStageButton;
     public TextMeshProUGUI infoTMP;
-    public CSVReader csvReader;
-
+    public CSVReader LoadData;
     public float playerPosX;
     public float playerPosY;
     private int[,] board = new int[4, 4];
-    Vector3 initialPlayerPos;
-    bool win;
-    bool lose;
+    bool isWin;
+    bool isLose;
     int failureCount;
+    StageInfo id;
     void Start()
     {
         Initialize();
@@ -33,88 +31,109 @@ public class GameManager : MonoBehaviour
     {
         if (isStart)
         {
-            if (win || lose) return;
-            IsGetMouseButtonUp();
-        }
-    }
-    public void IsGetMouseButtonUp()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-            if (null != hit.collider)
+            if (isWin || isLose) return;
+
+            if (Input.GetMouseButtonUp(0))
             {
-                Vector3 pos = hit.collider.gameObject.transform.position;
-                int x = (int)pos.x;
-                int y = (int)pos.y;
-                Debug.Log("hitCollider");
-                // �אڂ��Ă��邩
-                if (player.transform.position.x + 1 == pos.x && player.transform.position.y == pos.y
-                 || player.transform.position.x - 1 == pos.x && player.transform.position.y == pos.y
-                 || player.transform.position.x == pos.x && player.transform.position.y + 1 == pos.y
-                 || player.transform.position.x == pos.x && player.transform.position.y - 1 == pos.y)
-                {
-                    if (-1 == board[y, x]) // �ʂ��ꏊ�̎�
-                    {
-                        player.transform.position = pos;
-                        //board[y, x] = 0;
-                    }
-                    //else if (0 == board[y, x]) // �ʂ����ꏊ�̎�
-                    //{
-                    //    infoTMP.text = "�����͂��������Ȃ�";
-                    //}
-                    else if (1 == board[y, x]) // �Q�[���I�[�o�[�̎�
-                    {
-                        player.transform.position = pos;
-                        GameOver();
-                    }
-                    else if (2 == board[y, x]) // �N���A�̎�
-                    {
-                        player.transform.position = pos;
-                        //board[y, x] = 0;
-                        CompleteStage();
-                    }
-                }
+                TryMove();
             }
         }
     }
+
+    struct StageInfo // 構造体の定義
+    {
+        public int movablePosition;
+        public int notMovablePosition;
+        public int obstacles;
+        public int goal;
+    }
+
     public void Initialize()
     {
+        // ステージ情報
+        id.movablePosition = -1; // 移動可能
+        id.notMovablePosition = 0; // 移動不可能
+        id.obstacles = 1; // 障害物
+        id.goal = 2; // ゴール
+        
         isStart = false;
-        win = false;
-        lose = false;
+        isWin = false;
+        isLose = false;
         obstacles.Initialize();
         infoTMP.text = "";
-        // �f�[�^��z���
+
+        // ステージの初期化
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                board[i, j] = csvReader.temp[i, j];
-                Debug.Log(board[i, j]);
+                board[i, j] = LoadData.temp[i, j];
             }
         }
-        // �v���C���[�̏����ݒ�
-        initialPlayerPos = new Vector3(playerPosX, playerPosY, 0.0f);
-        player.transform.position = initialPlayerPos;
-        //board[playerPosY, playerPosX] = 0;
+
+        // プレイヤーのポジションの初期化
+        player.transform.position = new Vector3(playerPosX, playerPosY, 0.0f);
+
         player.SetActive(false);
-        // �{�^���̏����ݒ�
         nextStageButton.SetActive(false);
         resultObj.SetActive(false);
     }
+
+    public void TryMove()
+    {
+        // rayを飛ばす
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        // コライダーに当たらなかったら処理終了
+        if (hit.collider == null) { return; }
+
+        // 選択したオブジェクトのポジションを取得
+        Vector3 pos = hit.collider.gameObject.transform.position;
+        // 配列に入れて判定をとるために変数に入れる
+        int x = (int)pos.x;
+        int y = (int)pos.y;
+
+        // プレイヤーの隣のマスであれば
+        if (player.transform.position.x + 1 == pos.x && player.transform.position.y == pos.y
+         || player.transform.position.x - 1 == pos.x && player.transform.position.y == pos.y
+         || player.transform.position.x == pos.x && player.transform.position.y + 1 == pos.y
+         || player.transform.position.x == pos.x && player.transform.position.y - 1 == pos.y)
+        {
+            // 選択したものが何だったか
+            if (id.movablePosition == board[y, x])
+            {
+                player.transform.position = pos;
+                //board[y, x] = 0; // 一度通ったことを記録
+            }
+/*          else if (id.notMovablePosition == board[y, x]) // 一度通った場所を通れなくする場合
+            {
+                infoTMP.text = "そこには戻れない";
+            }                                                                                   */
+            else if (id.obstacles == board[y, x])
+            {
+                player.transform.position = pos;
+                GameOver();
+            }
+            else if (id.goal == board[y, x])
+            {
+                player.transform.position = pos;
+                CompleteStage();
+            }
+        }
+    }
+
     public void CompleteStage()
     {
-        win = true;
-        infoTMP.text = "�����؂����I";
+        isWin = true;
+        infoTMP.text = "逃げ切った!";
         nextStageButton.SetActive(true);
     }
     public void GameOver()
     {
-        lose = true;
+        isLose = true;
         failureCount++;
-        infoTMP.text = "�݂������I";
+        infoTMP.text = "みつかった!";
         resultObj.SetActive(true);
         if (failureCount == 3)
         {
@@ -127,7 +146,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScene");
     }
-    public void OnClickRetry()
+    public void OnClickRetry() //TODO いらんから消してボタン祖設定を変える
     {
         Initialize();
     }
@@ -142,7 +161,7 @@ public class GameManager : MonoBehaviour
     {
         player.SetActive(true);
     }
-    public void OnClickDebug()//�f�o�b�O�p�i�e�z��̒l���o�͂���j
+    public void OnClickDebug() // デバッグ用
     {
         for (int i = 0; i < 4; i++)
         {
