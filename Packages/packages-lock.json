@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5cc97c7f0085624b6ef57853d70b404440060cef"
+    },
+    "com.mackysoft.navigathena": {
+      "version": "https://github.com/mackysoft/Navigathena.git?path=Assets/MackySoft/MackySoft.Navigathena",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5543932f976f37c9c133ad9e5f90448200ff4308"
+    },
     "com.unity.2d.animation": {
       "version": "10.0.3",
       "depth": 1,
